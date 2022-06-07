@@ -42,3 +42,7 @@ python3 rigid_transform_3D.py
 ~~~
 roslaunch check_calibration_use_marker.launch
 ~~~
+Example extrinsic result:
+~~~
+0.05915086 -0.04666373 -0.07656602  0.70759693  0.69656685 -0.11808417  0.00278902
+~~~
