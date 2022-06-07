@@ -1,0 +1,61 @@
+<launch>
+
+    <arg name="start_simulator" default="false" doc="Start a simulated tracking system with a trivial noise model" />
+    <arg name="evaluation" default="true" doc="Start the evaluator to estimate the accuracy of the calibration" />
+
+    <arg name="namespace_prefix" default="easy_handeye" />
+    <arg name="eye_on_hand" default="true" />
+    <arg if="$(arg eye_on_hand)" name="namespace" value="$(arg namespace_prefix)_eye_on_hand" />
+    <arg unless="$(arg eye_on_hand)" name="namespace" value="$(arg namespace_prefix)_eye_on_base" />
+
+    <arg name="robot_base_frame" value="optical_origin" />
+    <arg name="robot_effector_frame" value="cross_bent" />
+
+
+    <arg name="tracking_base_frame" value="rs_d435_color_optical_frame" />
+    <arg name="camera_name_space" value="/rs_d435/color"/>
+    <arg name="camera_launch_file" value="rs_d435.launch"/>    -->
+    <arg name="image_name" value="image_raw"/> -->
+
+    <arg name="tracking_marker_frame" value="board" />
+
+
+    <!-- start camera driver -->
+    <!--include file="rs_d435.launch" >
+    </include-->
+
+    <!-- start charuco -->
+    <include file="charuco_rsd435.launch" >
+    </include>
+    
+    <!-- start ndi polaris -->
+    <include file="$(find ndi_polaris)/launch/demo.launch" >
+    	<arg name="target_names" value="cross_bent" />
+    </include>
+ 
+ 
+    <!-- node pkg="tf" type="static_transform_publisher" name="fix_calibration" args="0.05400157 -0.03708949 -0.07662538  0.70452906  0.69851271 -0.12366512   0.02059214 $(arg robot_effector_frame) $(arg tracking_base_frame) 100" /-->
+    
+     <node pkg="tf" type="static_transform_publisher" name="fix_calibration" args="0.05916086 -0.038435   -0.07683849  0.70635815  0.69584471 -0.12958832  0.00806764  $(arg robot_effector_frame) $(arg tracking_base_frame) 100" />
+
+    <!-- node pkg="tf" type="static_transform_publisher" name="fix_marker" args="0.06055337  0.07347567 -0.86906471 -0.01499618  0.07927513  0.7006639   0.70891514 optical_origin marker 100" /-->
+    
+    <node pkg="tf" type="static_transform_publisher" name="fix_marker" args="0.11729315 -0.06164633 -1.15930436 0.16548077 -0.28417813  0.61267491  0.71867124 optical_origin marker 100" />
+    
+    
+
+
+
+    <!-- evaluate the accuracy of the hand-eye calibration  -->
+    <node if="$(arg evaluation)" ns="$(arg namespace)" name="calibration_evaluator" pkg="rqt_easy_handeye" type="rqt_calibration_evaluator" respawn="false" output="screen" >
+        <param name="eye_on_hand" value="$(arg eye_on_hand)" />
+        <param name="robot_base_frame" value="$(arg robot_base_frame)" />
+        <param name="robot_effector_frame" value="$(arg robot_effector_frame)" />
+        <param name="tracking_base_frame" value="$(arg tracking_base_frame)" />
+        <param name="tracking_marker_frame" value="$(arg tracking_marker_frame)" />
+    </node>
+
+    <!-- start rviz with custom configuration -->
+    <node ns="/iiwa" name="$(anon rviz)" pkg="rviz" type="rviz" respawn="true"
+          args="-d $(find easy_handeye_demo)/launch/iiwa_stack_config.rviz" output="screen" />
+</launch>

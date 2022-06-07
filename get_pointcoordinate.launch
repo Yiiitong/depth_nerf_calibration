@@ -1,0 +1,25 @@
+<launch>    
+    <!-- start ndi polaris -->
+    <include file="$(find ndi_polaris)/launch/demo.launch" >
+    	<arg name="target_names" value="pointer_tip" />
+    </include>
+
+    <!-- node pkg="tf" type="static_transform_publisher" name="ee_to_tip" args="-6.00121673e-04, 4.24638783e-06, 8.06843088e-04 0.0 0.0 0.0 1.0 pointer_tip tool_tip 100"/-->
+    
+    <node pkg="tf" type="static_transform_publisher" name="ee_to_tip" args="0 0 0 0.0 0.0 0.0 1.0 pointer_tip tool_tip 100"/>
+        
+    <!-- start get_point -->
+    <node pkg="roboticvisiondataset" type="get_point_coordinate.py" name="get_pointcoodinate" args="--force-discover" output="screen">
+
+        <param name="start_rviz" value="false"/>
+        <param name="move_group_namespace" value="/iiwa" />
+        <param name="move_group" value="manipulator" />
+        <param name="rviz_config_file" value="$(find easy_handeye)/launch/iiwa_stack_config.rviz" />
+
+        
+        <param name="robot_base_frame" value="optical_origin" />
+        <param name="robot_effector_frame" value="pointer_tip" />
+        
+    </node>
+
+</launch>

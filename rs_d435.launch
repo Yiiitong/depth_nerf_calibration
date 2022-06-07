@@ -1,0 +1,55 @@
+<!--
+Realsense launch file
+-->
+
+<launch>
+  <arg name="fps"         default="30"/>
+
+  <rosparam>
+      /rs_d435/stereo_module/emitter_enabled: true
+      /rs_d435/stereo_module/enable_auto_exposure: true
+      /rs_d435/temporal/filter_smooth_alpha: 0.1
+      /rs_d435/temporal/filter_smooth_delta: 100
+      /rs_d435/temporal/holes_fill: 0
+  </rosparam>
+  
+  <group ns="rs_d435">
+    <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+      <arg name="external_manager"         value="false"/>
+      <arg name="manager"                  value="realsense2_camera_manager"/>
+      <arg name="tf_prefix"                value="rs_d435"/>
+      <arg name="serial_no"                value="034422072441"/>
+
+      <arg name="enable_pointcloud"        value="false"/>
+      <arg name="enable_sync"              value="true"/>
+      <arg name="enable_confidence"        value="false"/>
+
+      <arg name="depth_width"              value="640"/>
+      <arg name="depth_height"             value="480"/>
+      <arg name="enable_depth"             value="true"/>
+      <arg name="depth_fps"                value="$(arg fps)"/>
+      <arg name="align_depth"              value="true"/>
+
+      <arg name="color_width"              value="1280"/>
+      <arg name="color_height"             value="720"/>
+      <arg name="enable_color"             value="true"/>
+      <arg name="color_fps"                value="$(arg fps)"/>
+
+      <arg name="infra_width"              value="640"/>
+      <arg name="infra_height"             value="480"/>
+      <arg name="enable_infra1"            value="true"/>
+      <arg name="enable_infra2"            value="true"/>
+      <arg name="infra_fps"                value="$(arg fps)"/>
+
+      <arg name="publish_tf"               value="true"/>
+      <arg name="tf_publish_rate"          value="0"/>
+
+      <arg name="stereo_module/exposure/1" default="1"/>
+      <arg name="stereo_module/gain/1"     default="1"/>
+      <arg name="stereo_module/exposure/2" default="1"/>
+      <arg name="stereo_module/gain/2"     default="1"/>
+
+      <arg name="filters"                   value="temporal"/>
+    </include>
+  </group>
+</launch>

@@ -1,0 +1,40 @@
+<launch>
+
+    <arg name="marker_size" doc="Size of the ArUco marker used, in meters"/>
+    <arg name="marker_id" doc="The ID of the ArUco marker used"/>
+
+    <!-- start camera driver -->
+    <include file="rs_d435.launch" >
+    </include>
+    
+    <!-- start charuco -->
+    <include file="charuco_rsd435.launch" >
+    </include>
+    
+    <!-- start ndi polaris -->
+    <include file="$(find ndi_polaris)/launch/demo.launch" >
+    	<arg name="target_names" value="cross_bent" />
+    </include>
+
+
+    <!-- start easy_handeye -->
+    <node pkg="roboticvisiondataset" type="handeye_calibration.py" name="handeye_calibration" args="--force-discover" output="screen">
+        <param name="eye_on_hand" value="true" />
+        <param name="start_rviz" value="false"/>
+        <param name="move_group_namespace" value="/iiwa" />
+        <param name="move_group" value="manipulator" />
+        <param name="rviz_config_file" value="extrinsic_cali.rviz" />
+        <param name="tracking_base_frame" value="rs_d435_color_frame" />
+        <param name="tracking_marker_frame" value="board" />
+        <param name="robot_base_frame" value="optical_origin" />
+        <param name="robot_effector_frame" value="cross_bent" />
+        <param name="freehand_robot_movement" value="true" />
+        <param name="robot_velocity_scaling" value="0.3" />
+        <param name="robot_acceleration_scaling" value="0.1" />
+        <param name="angle_delta" value="10" />
+        <param name="translation_delta" value="0.1" />
+        <param name="camera_topic" value="/rs_d435/color" />
+    </node>
+
+
+</launch>
