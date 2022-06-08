@@ -33,16 +33,25 @@ get save_points_pointer_tip_np.txt
 python3 rigid_transform_3D.py
 ~~~
 
-4. put the pose result into check_calibration.launch:
+4. put the pose result into check_calibration_use_marker.launch:
 ~~~
-   <node pkg="tf" type="static_transform_publisher" name="fix_marker" args="0.04417303 -0.13011689 -0.96095168  -0.11778477  0.15470386  0.70250718  0.68459997 optical_origin board 100" />
+    <node pkg="tf" type="static_transform_publisher" name="fix_marker" args="0.12178378 -0.13873586 -1.02622315 -0.09006817  0.04294831  0.70965433  0.69744813 optical_origin marker 100" />
 ~~~
 
 5. run check_calibration_use_marker.launch
 ~~~
 roslaunch check_calibration_use_marker.launch
 ~~~
+real-time extrinsic result wil be printed
+Also the error between ground truth board corner coordinates and reprojected corner coordinates will be printed
+
 Example extrinsic result:
 ~~~
 0.05915086 -0.04666373 -0.07656602  0.70759693  0.69656685 -0.11808417  0.00278902
 ~~~
+For calibration evaluation, put the extrinsic result into check_calibration_use_marker.launch
+~~~
+     <node pkg="tf" type="static_transform_publisher" name="fix_calibration" args="0.05915086 -0.04666373 -0.07656602  0.70759693  0.69656685 -0.11808417  0.00278902  $(arg robot_effector_frame) $(arg tracking_base_frame) 100" />
+~~~
+Both rotation error (degree) and translation error (mm) will be printed
+
