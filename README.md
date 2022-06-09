@@ -18,6 +18,8 @@ rostopic pub -r 3000 /rs_d435/color/new_camera_info sensor_msgs/CameraInfo -f d4
 roslaunch hand_eye_calibration_ndi_rs.launch
 ~~~
 
+Press 'sample' to capture sample poses, when it gets to the defined number of samples, press 'calibrate'
+
 ### Using fixed board as reference
 
 1. Fix board, fix polaris (don't move them afterwards).
