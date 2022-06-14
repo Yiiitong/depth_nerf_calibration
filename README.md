@@ -2,10 +2,17 @@
 
 ## Intrinsic calibration
 intrinsic calibration for realsense D435
+
+The calibration uses the chessboard as below:
+
+<img alt="Alt Text" src="images/chessboard.jpg" width="" height="300"/>
+Run command for intrinsic calibration:
+
 ~~~
 roslaunch rs_d435.launch
 rosrun camera_calibration cameracalibrator.py --size 7x6 --square 0.03 image:=/rs_d435/color/image_raw camera:=/rs_d435 --no-service-check
 ~~~
+
 Save the calibrated intrinsic into d435_intrinsic_larger.yaml and publish the updated camera info
 ~~~
 rostopic pub -r 3000 /rs_d435/color/new_camera_info sensor_msgs/CameraInfo -f d435_intrinsic_larger.yaml
@@ -18,19 +25,33 @@ rostopic pub -r 3000 /rs_d435/color/new_camera_info sensor_msgs/CameraInfo -f d4
 roslaunch hand_eye_calibration_ndi_rs.launch
 ~~~
 
+<img alt="Alt Text" src="images/setting.JPG" width="" height="300"/>
+
 Press 'sample' to capture sample poses, when it gets to the defined number of samples, press 'calibrate'
 
 ### Using fixed board as reference
 
 1. Fix board, fix polaris (don't move them afterwards).
 
-3. Use pointer_tip tracker to get coordinates of 12 corners on the charuco board:
+2. Use pointer_tip tracker to get coordinates of 12 corners on the charuco board.
+
 ~~~
 roslaunch get_pointcoordinate.launch
 ~~~
 get save_points_pointer_tip_np.txt
 
+The pointer_tip tracker used:
+
+<img alt="Alt Text" src="images/tracker.JPG" width="" height="100"/>
+
+The 12 points on the board are shown as below:
+
+<img alt="Alt Text" src="images/charuco_numbered.png" width="" height="300"/>
+
+
+
 3. use rigid_transform_3D.py to get pose of the board from the 12 coordinates saved in save_points_pointer_tip_np.txt. (get x y z x y z w)(translation + quaterion)
+
 ~~~
 python3 rigid_transform_3D.py
 ~~~
