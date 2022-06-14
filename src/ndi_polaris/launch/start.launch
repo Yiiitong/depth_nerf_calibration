@@ -1,0 +1,22 @@
+<launch>
+    <arg name="target_names" default="cross_bent" />
+    <arg name="origin_name" default="optical_origin" />
+    <arg name="from_origin_to_target" default="true" />
+    <arg name="frequency" default="60" />
+    <arg name="baud_rate" default="115200" />
+
+    <node pkg="ndi_polaris" name="tracker" type="ndi_publisher.py" output="log">
+        <rosparam subst_value="True">
+            ndi_tool_names: "$(arg target_names)"
+            ndi_origin_name: "$(arg origin_name)"
+            ndi_tool_dir: "$(find ndi_polaris)/tools/"
+            ndi_publishing_frequency: "$(arg frequency)"
+            ndi_device_name: "/dev/ttyUSB0"
+            ndi_baud_rate: "$(arg baud_rate)"
+            from_origin_to_target: "$(arg from_origin_to_target)"
+        </rosparam>
+    </node>
+
+</launch>
+
+

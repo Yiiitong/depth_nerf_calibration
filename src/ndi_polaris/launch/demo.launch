@@ -1,0 +1,21 @@
+<launch>
+    <arg name="target_names" default="cross_bent" />
+    <arg name="origin_name" default="optical_origin" />
+    <arg name="from_origin_to_target" default="true" />
+    <arg name="frequency" default="60" />
+    <arg name="baud_rate" default="921600" />
+
+    <include file="$(find ndi_polaris)/launch/start.launch" >
+        <arg name="target_names" value="$(arg target_names)" />
+        <arg name="origin_name" value="$(arg origin_name)" />
+        <arg name="from_origin_to_target" value="$(arg from_origin_to_target)" />
+        <arg name="frequency" value="$(arg frequency)" />
+        <arg name="baud_rate" value="$(arg baud_rate)" />
+    </include>
+
+    <node name="optical_origin_publisher" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 1 map optical_origin 10" />
+
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false"
+          args="-d $(find ndi_polaris)/launch/example_config.rviz" output="log">
+    </node>
+</launch>

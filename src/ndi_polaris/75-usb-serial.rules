@@ -1,0 +1,5 @@
+SUBSYSTEMS=="usb", ATTRS{product}=="FT232R USB UART", ATTRS{serial}=="A900fYjX", KERNEL=="ttyUSB*", SYMLINK+="probe"
+SUBSYSTEMS=="usb", ATTRS{product}=="NDI Host USB Converter", KERNEL=="ttyUSB*", SYMLINK+="tracking%e", GROUP="sudo"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2307", KERNEL=="ttyACM*", SYMLINK+="ttyCam"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", KERNEL=="ttyACM*", SYMLINK+="ttyAxis%n"
+
