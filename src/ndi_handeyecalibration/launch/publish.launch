@@ -1,0 +1,38 @@
+<launch>
+    <!-- Publish the computed calibration stored in the ROS param server -->
+
+    <arg name="eye_on_hand" doc="eye-on-hand instead of eye-on-base" />
+    <arg name="namespace_prefix" default="ndi_handeyecalibration" />
+    <arg if="$(arg eye_on_hand)" name="namespace" value="$(arg namespace_prefix)_eye_on_hand" />
+    <arg unless="$(arg eye_on_hand)" name="namespace" value="$(arg namespace_prefix)_eye_on_base" />
+    <arg name="inverse" default="false" />
+    
+    <arg name="target_names" default="triangle_scalene" />
+    <arg name="robot_base_frame" default="base_link" />
+    
+    <arg name="load_handeye" default="true" />
+    
+    <arg name="start_rviz" default="false" doc="Visualize the hand-eye calibration result in Rviz to check it" /> 
+    <arg name="start_ndi" default="false" doc="Publish the pose of an NDI tracker tool to check the calibration" />
+    
+    <include if="$(arg start_ndi)" file="$(find ndi_polaris)/launch/start.launch">
+        <arg name="target_names" value="$(arg target_names)" />
+    </include>
+	
+    <include file="$(find easy_handeye)/launch/publish.launch" >
+        <arg name="eye_on_hand" value="$(arg eye_on_hand)" />
+        <arg name="namespace_prefix" value="$(arg namespace_prefix)" />
+        
+        <arg name="inverse" value="$(arg inverse)" />
+        <arg name="robot_base_frame" value="$(arg robot_base_frame)" />
+    </include>
+
+    <!--start optionally rviz for verification or visualization-->
+    <group if="$(arg start_rviz)" >
+        <node unless="$(arg eye_on_hand)" name="$(anon rviz)" pkg="rviz" type="rviz" respawn="true" 
+            args="-d $(find ndi_handeyecalibration)/launch/eye_on_base.rviz" output="screen" />
+        
+        <node if="$(arg eye_on_hand)" name="$(anon rviz)" pkg="rviz" type="rviz" respawn="true" 
+            args="-d $(find ndi_handeyecalibration)/launch/eye_on_hand.rviz" output="screen" />
+    </group>
+</launch>

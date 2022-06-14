@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>ndi_handeyecalibration</name>
+  <version>0.0.1</version>
+  <description>Launch files for calibrating any robot with an NDI polaris</description>
+
+  <maintainer email="marco.esposito@tum.de">Marco Esposito</maintainer>
+
+  <license>GPLv3</license>
+
+  <author email="marco.esposito@tum.de">Marco Esposito</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>easy_handeye</build_depend>
+  <build_depend>ndi_polaris</build_depend>
+  <run_depend>easy_handeye</run_depend>
+  <run_depend>ndi_polaris</run_depend>
+
+  <export>
+  </export>
+</package>

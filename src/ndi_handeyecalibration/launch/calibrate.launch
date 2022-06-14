@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Setting calibration namespace -->
+    <arg name="eye_on_hand" doc="eye-on-hand instead of eye-on-base" />
+    <arg name="namespace_prefix" default="ndi_handeyecalibration" />
+    <arg if="$(arg eye_on_hand)" name="namespace" default="$(arg namespace_prefix)_eye_on_hand" />
+    <arg unless="$(arg eye_on_hand)" name="namespace" default="$(arg namespace_prefix)_eye_on_base" />
+    
+    <!-- Marker information -->
+    <arg name="target_name" 
+         doc="The name of the ROM file and the tf frame of the NDI tracker attached to the robot hand" />
+    
+    <!-- The input reference frames -->
+    <arg name="robot_base_frame" />
+    <arg name="robot_effector_frame" />
+    <arg name="tracking_base_frame" default="tracking_origin" />
+    <arg name="tracking_marker_frame" default="$(arg target_name)" />
+    
+    <!-- Publish dummy frames while calibrating -->
+    <arg name="publish_dummy" default="true"/>
+    
+    <!-- GUI arguments -->
+    <arg name="start_rviz" default="true" doc="if true, rviz will be started with the provided config file" />
+    <arg name="rviz_config_file" default="$(find easy_handeye)/launch/rviz_easy_handeye.config" doc="the path to the rviz config file to be opened" />
+    <arg name="start_rqt" default="true" doc="if true, rqt will be started with the provided perspective" />
+    <arg name="rqt_perspective_file" default="$(find easy_handeye)/launch/rqt_easy_handeye.perspective" doc="the path to the rqt perspective file to be opened" />
+    
+    <arg name="freehand_robot_movement" default="false" doc="if false, the rqt plugin for the automatic robot motion with MoveIt! will be started" />
+    <arg name="translation_delta_meters" default="0.1" doc="the maximum movement that the robot should perform in the translation phase" />
+    <arg name="rotation_delta_degrees" default="25" doc="the maximum rotation that the robot should perform" />
+    <arg name="robot_velocity_scaling" default="0.3" doc="the maximum speed the robot should reach, as a factor of the speed declared in the joint_limits.yaml" />
+    <arg name="robot_acceleration_scaling" default="0.2" doc="the maximum acceleration the robot should reach, as a factor of the acceleration declared in the joint_limits.yaml" />
+    
+    <!-- This node publishes the pose of an NDI tracker -->
+    <include file="$(find ndi_polaris)/launch/start.launch">
+        <arg name="origin_name" value="$(arg tracking_base_frame)" />
+        <arg name="target_names" value="$(arg target_name)" />
+    </include>
+    
+    <!-- This node watches the specified tf frames, samples on user input and computes the hand-eye calibration -->
+    <include file="$(find easy_handeye)/launch/calibrate.launch">
+        <arg name="namespace_prefix" value="$(arg namespace_prefix)" />
+        <arg name="eye_on_hand" value="$(arg eye_on_hand)" />
+        <arg name="publish_dummy" value="$(arg publish_dummy)" />
+        
+        <arg name="tracking_base_frame" value="$(arg tracking_base_frame)" />
+        <arg name="tracking_marker_frame" value="$(arg tracking_marker_frame)" />
+        <arg name="robot_base_frame" value="$(arg robot_base_frame)" />
+        <arg name="robot_effector_frame" value="$(arg robot_effector_frame)" />
+        
+        <arg name="start_rviz" value="$(arg start_rviz)" />
+        <arg name="rviz_config_file" value="$(arg rviz_config_file)" />
+        <arg name="start_rqt" value="$(arg start_rqt)" />
+        <arg name="rqt_perspective_file" value="$(arg rqt_perspective_file)" />
+        
+        <arg name="freehand_robot_movement" value="$(arg freehand_robot_movement)" />
+        <arg name="translation_delta_meters" value="$(arg translation_delta_meters)" />
+        <arg name="rotation_delta_degrees" value="$(arg rotation_delta_degrees)" />
+        <arg name="robot_velocity_scaling" value="$(arg robot_velocity_scaling)" />
+        <arg name="robot_acceleration_scaling" value="$(arg robot_acceleration_scaling)" />
+    </include>
+</launch>
