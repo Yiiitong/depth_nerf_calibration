@@ -1,0 +1,34 @@
+<launch>
+    <arg name="camera"         default="/sim/color"/>
+    <arg name="frame"         default="camera_link"/>
+    <arg name="aruco_ros"         default="true"/>
+    <arg name="static"         default="false"/>
+
+    <node if="$(arg static)" pkg="tf" type="static_transform_publisher" name="fix_$(arg frame)_frame" args="0 0 0 0 0 0 1 map $(arg frame) 100" />
+
+    <node if="$(arg aruco_ros)" pkg="aruco_ros" type="single" name="aruco_single">
+        <remap from="/camera_info" to="$(arg camera)/camera_info"/>
+        <remap from="/image" to="$(arg camera)/image_raw"/>
+        <param name="image_is_rectified" value="false"/>
+        <param name="marker_size"        value="0.15"/>
+        <param name="marker_id"          value="26"/>
+        <param name="reference_frame"    value="$(arg frame)"/>
+        <param name="camera_frame"       value="$(arg frame)"/>
+        <param name="marker_frame"       value="camera_marker"/>
+    </node>
+
+    <node unless="$(arg aruco_ros)" pkg="easy_aruco" type="easy_aruco_node" name="aruco_node" output="screen" >
+        <param name="object_type" value="aruco_marker" />
+
+        <param name="camera_namespace" value="$(arg camera)" />
+        <param name="camera_info_topic" value="$(arg camera)/camera_info" />
+        <param name="camera_image_topic" value="$(arg camera)/image_raw" />
+        <param name="dictionary" value="DICT_ARUCO_ORIGINAL" />
+
+        <param name="camera_frame" value="$(arg frame)" />
+        <param name="reference_frame" value="$(arg frame)" />
+
+        <param name="marker_size" value="0.15" />
+    </node>
+</launch>
+

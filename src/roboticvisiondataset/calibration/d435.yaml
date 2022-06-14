@@ -1,0 +1,26 @@
+image_width: 848
+image_height: 480
+camera_name: d435_left
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [423.165  ,   0.     , 423.622,
+           0.     , 423.164, 243.947,
+           0.     ,   0.     ,   1.     ]
+camera_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.0, 0.0, 0.0, 0.0, 0.0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1., 0., 0.,
+         0., 1., 0.,
+         0., 0., 1.]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [422.29181,   0.     , 425.69985,   0.     ,
+           0.     , 422.97763, 242.48587,   0.     ,
+           0.     ,   0.     ,   1.     ,   0.     ]

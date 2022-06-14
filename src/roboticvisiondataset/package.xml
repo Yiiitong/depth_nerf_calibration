@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>roboticvisiondataset</name>
+  <version>0.0.0</version>
+  <description>The robotic vision dataset package</description>
+  <maintainer email="todo@todo.todo">camp</maintainer>
+  <license>TODO</license>
+  <!-- <url type="website">http://wiki.ros.org/test_package</url> -->
+  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>arena_camera</depend>
+  <depend>aruco_ros</depend>
+  <depend>iiwa_stack</depend>
+  <depend>realsense-ros</depend>
+  <depend>gazebo_ros</depend>
+
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>rqt_gui</exec_depend>
+  <exec_depend>rqt_gui_py</exec_depend>
+  <exec_depend>moveit_commander</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION == 2">python-opencv</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION == 3">python3-opencv</exec_depend>
+
+  <export>
+    <gazebo_ros gazebo_model_path="${prefix}/models"/>
+    <gazebo_ros gazebo_media_path="${prefix}/worlds"/>
+    <rqt_gui plugin="${prefix}/plugin.xml"/>
+  </export>
+</package>

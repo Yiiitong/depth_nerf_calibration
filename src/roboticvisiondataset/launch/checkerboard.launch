@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="image"                    default="/sim/color/image_raw"/>
+  <arg name="checkerboard_columns"     default="7"/>
+  <arg name="checkerboard_rows"        default="6"/>
+  <arg name="checkerboard_square_size" default="0.03"/>
+  
+  <node name="tuw_checkerboard_node" pkg="tuw_checkerboard" type="tuw_checkerboard_node" output="screen">
+      <remap from="image" to="$(arg image)" />
+      <param name="checkerboard_columns" value="$(arg checkerboard_columns)" type="int" />
+      <param name="checkerboard_rows" value="$(arg checkerboard_rows)" type="int" />
+      <param name="checkerboard_square_size" value="$(arg checkerboard_square_size)" type="double" />
+      <param name="show_camera_image" value="true" type="bool" />
+  </node>  
+</launch>

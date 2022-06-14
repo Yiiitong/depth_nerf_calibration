@@ -1,0 +1,1 @@
+from point_coordinate.point_coordinate_gui import GetPointcoordinate

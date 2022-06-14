@@ -1,0 +1,18 @@
+<launch>
+    <node pkg="easy_aruco" type="easy_aruco_node" name="charuco_node" output="screen" >
+        <param name="object_type" value="charuco_board" />
+
+        <param name="camera_namespace" value="/rs_d435/color" />
+        <param name="camera_info_topic" value="/rs_d435/color/camera_info" />
+        <param name="camera_image_topic" value="/rs_d435/color/image_raw" />
+        <param name="dictionary" value="DICT_4X4_250" />
+
+        <param name="camera_frame" value="rs_d435_color_optical_frame" />
+        <param name="reference_frame" value="rs_d435_color_optical_frame" />
+
+        <param name="marker_size" value="0.026" />
+        <param name="square_size" value="0.035" />
+        <param name="square_number_x" value="5" />
+        <param name="square_number_y" value="5" />
+    </node>
+</launch>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Left -->
+    <node name="rs_d435" pkg="roboticvisiondataset" type="capture_rs.py" output="screen">
+        <!-- <param name="fps" type="int" value="1"/>
+        <param name="device_user_id" type="string" value="rgb_l"/>
+        <param name="camera_type" type="string" value="rgb"/>
+        <param name="is_master" type="bool" value="false"/>
+        <param name="device_id" type="string" value="200400531"/>
+        <param name="camera_info_url" value="file://$(find roboticvisiondataset)/calibration/stereo_left.yaml"/> -->
+    </node>
+</launch>

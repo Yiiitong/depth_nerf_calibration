@@ -1,0 +1,31 @@
+<launch>
+    <arg name="robot_name" default="iiwa"/>
+    <arg name="model" default="iiwa7"/>
+    <arg name="hardware_interface" default="PositionJointInterface"/>
+    
+    <!-- start the simulated tracking -->
+    <node name="tracking_simulator" pkg="easy_handeye_demo" type="tracking_simulator.py" output="screen">
+        <!-- if false, it computes the tracking output with respect to the ground truth and publishes it wrt the calibration result -->
+        <param name="is_calibration" value="true" />
+
+        <!-- tracking simulation frequency and noise parameters -->
+        <param name="frequency" value="10" />
+        <param name="translation_noise_stdev" value="0.001" />
+        <param name="rotation_noise_stdev" value="0.0001" />
+
+        <param name="eye_on_hand" value="true" />
+        <!-- transformations for the eye-on-hand case -->
+        <param name="ground_truth_calibration_transformation" value="0.12 0.21 0.137 0 0 0 1" />
+        <param name="arbitrary_marker_placement_transformation" value="0.7 0.2 -0.3 0 0 0 1" />
+
+        <param name="tracking_base_frame" value="tracking_origin" />
+        <param name="tracking_marker_frame" value="tracking_marker" />
+        <param name="robot_base_frame" value="iiwa_link_0" />
+        <param name="robot_effector_frame" value="iiwa_link_ee" />
+
+        <!-- simulated tracking noise parameters -->
+        <param name="frequency" value="10" />
+        <param name="translation_noise_stdev" value="0.0001" />
+        <param name="rotation_noise_stdev" value="0.00001" />
+    </node>
+</launch>

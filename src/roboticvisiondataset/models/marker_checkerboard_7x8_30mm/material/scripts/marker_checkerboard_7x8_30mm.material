@@ -1,0 +1,14 @@
+material checkerboard/marker_checkerboard_7x8_30mm
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture marker_checkerboard_7x8_30mm.png
+			}
+		}
+	}
+}
+

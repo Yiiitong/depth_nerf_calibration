@@ -1,0 +1,9 @@
+<launch>
+    <arg name="camera"         default="/sim/color"/>
+
+    <node pkg="camera_calibration" type="cameracalibrator.py" name="cameracalibrator" args="--size 6x7 --square 0.03 --k-coefficients 3" output="screen">
+        <remap from="/camera" to="/$(arg camera)"/>
+        <remap from="/image" to="/$(arg camera)/image_raw"/>
+    </node>
+</launch>
+
