@@ -78,3 +78,10 @@ For calibration evaluation, put the extrinsic result into check_calibration_use_
 ~~~
 Both rotation error (degree) and translation error (mm) will be printed
 
+##External resources
+
+easy hand-eye 
+easy aruco
+ndi polaris
+realsense-ros
+
