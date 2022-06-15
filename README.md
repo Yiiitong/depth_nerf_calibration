@@ -80,11 +80,9 @@ Both rotation error (degree) and translation error (mm) will be printed
 
 ## External resources
 
-easy hand-eye 
+[easy hand-eye](https://github.com/IFL-CAMP/easy_handeye)
 
-easy aruco
+[easy aruco](https://github.com/marcoesposito1988/easy_aruco)
 
-ndi polaris
-
-realsense-ros
+[realsense-ros](https://github.com/IntelRealSense/realsense-ros)
 
